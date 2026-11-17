@@ -5,7 +5,7 @@
 // The page of a knowledge base that lists its works.
 #let bibliography-page = "/bibliography"
 
-// How keno shows a citation and a list of works.
+// How encre shows a citation and a list of works.
 #let style = "chicago-author-date"
 
 // The block that `works` takes in the page whose text is `text`: Hayagriva
@@ -19,7 +19,7 @@
 /// The works the knowledge base cites, on its page `/bibliography`, shown as
 /// a full bibliography. Write them in Hayagriva YAML, Typst's own format, or
 /// in BibLaTeX, as one raw block whose lines start at the left margin.
-/// keno reads a citation of a YAML work as its authors, title and date.
+/// encre reads a citation of a YAML work as its authors, title and date.
 ///
 /// ```typ
 /// = Bibliography
@@ -69,7 +69,7 @@
 }
 
 // One work as a reader names it: its authors, title and date, such as
-// "Evans, Eric: Domain-Driven Design (2003)"; its key when keno cannot
+// "Evans, Eric: Domain-Driven Design (2003)"; its key when encre cannot
 // read it.
 #let work-name(works, key) = {
   let work = works.at(key, default: none)
@@ -93,8 +93,8 @@
   ()
 }
 
-// `item` as keno records it: each citation made the name of its work, so
-// that keno reads what the source is rather than an empty citation.
+// `item` as encre records it: each citation made the name of its work, so
+// that encre reads what the source is rather than an empty citation.
 #let recorded(item, works) = {
   if type(item) != content { return item }
   let key = if item.func() == cite { str(item.key) } else if item.func() == ref and str(item.target) in works { str(item.target) }

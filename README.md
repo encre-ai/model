@@ -1,12 +1,12 @@
-# @keno/model
+# @encre/model
 
-The Typst library keno pages are written with. A page is one Typst file in a knowledge base. It holds the elements of a domain model: terms, entities, events, invariants, formulas, decisions and open questions, and the links between pages. keno serves this library to every page, compiles each page when it is written, and reads the elements out of it.
+The Typst library encre pages are written with. A page is one Typst file in a knowledge base. It holds the elements of a domain model: terms, entities, events, invariants, formulas, decisions and open questions, and the links between pages. encre serves this library to every page, compiles each page when it is written, and reads the elements out of it.
 
 ```typ
-#import "@keno/model:0.1.0": *
+#import "@encre/model:0.1.0": *
 ```
 
-A page holds information only. keno refuses `set` and `show` rules, and imports of any other package.
+A page holds information only. encre refuses `set` and `show` rules, and imports of any other package.
 
 ## Elements
 
@@ -55,7 +55,7 @@ Pages live at paths such as `/billing/invoice`. An element of the same page is i
 #see(<paid-in-full>)
 ```
 
-keno checks every `at` and `see` when the page is written, and refuses a link to a page or label that does not exist.
+encre checks every `at` and `see` when the page is written, and refuses a link to a page or label that does not exist.
 
 ## Sources
 
@@ -77,7 +77,7 @@ A source refers to an element of the knowledge base with `see`. The `@` form nam
 Works live on the knowledge base's page `/bibliography`, in one block of Hayagriva YAML or BibLaTeX given to `works`. Add a work there under a key such as `evans-2003`, with its type, title, author, date and url. Write the YAML lines at the left margin.
 
 ````typ
-#import "@keno/model:0.1.0": *
+#import "@encre/model:0.1.0": *
 = Bibliography
 The works this knowledge cites.
 #works(```yaml
@@ -89,7 +89,7 @@ evans-2003:
 ```)
 ````
 
-A page that cites a work, in its text or in a `source`, ends with `#sources()`, which lists the works it cites. keno reads a citation as the work's name only inside `source` or in text. Inside another field, such as a decision's `outcome`, it reads as nothing.
+A page that cites a work, in its text or in a `source`, ends with `#sources()`, which lists the works it cites. encre reads a citation as the work's name only inside `source` or in text. Inside another field, such as a decision's `outcome`, it reads as nothing.
 
 ## License
 

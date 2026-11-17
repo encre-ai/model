@@ -1,4 +1,4 @@
-// Links between pages, which keno checks when a page is written and points
+// Links between pages, which encre checks when a page is written and points
 // at the pages' addresses when it shows one.
 
 #import "element.typ": at, check-local, page-path, reference, reference-link, version
@@ -25,7 +25,7 @@
 /// #see(<paid-in-full>)
 /// ```
 ///
-/// keno refuses the page when the page or the label does not exist. A link
+/// encre refuses the page when the page or the label does not exist. A link
 /// shows, unless content is given to show: the heading the label sits on,
 /// or the name of the element it labels, or the label; for a whole page,
 /// its first heading, or its path.
@@ -40,7 +40,7 @@
     if args.len() == 2 {
       at("/" + path, args.at(1))
     } else {
-      (keno-reference: version, page: path, label: none, name: none)
+      (encre-reference: version, page: path, label: none, name: none)
     }
   } else {
     reference(args.at(0), "see")

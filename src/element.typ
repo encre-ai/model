@@ -1,8 +1,8 @@
-// What every element shares: its key, the metadata keno reads it from, and
+// What every element shares: its key, the metadata encre reads it from, and
 // the references that tie it to other elements.
 
 // The version of the library, written into every element's metadata so
-// that keno reads each element by the rules it was written under.
+// that encre reads each element by the rules it was written under.
 #let version = "0.1.0"
 
 // The key an element gets when it is given none: its name in lower case,
@@ -25,7 +25,7 @@
 }
 
 // The aliases of an element called `name`, checked: other names that mean
-// the same, such as "PO" for "Purchase order". keno finds the element by
+// the same, such as "PO" for "Purchase order". encre finds the element by
 // any of them, comparing names as `slug` writes them, so two names that
 // differ only in case or punctuation are one name.
 #let aliases-of(kind, name, aliases) = {
@@ -46,7 +46,7 @@
   aliases
 }
 
-// A part of an element that keno styles on its own, such as its aliases: in
+// A part of an element that encre styles on its own, such as its aliases: in
 // HTML, a paragraph marked `data-part="aliases"`; elsewhere, the body
 // inline.
 #let part(name, body) = context if target() == "html" {
@@ -110,7 +110,7 @@
 }
 
 /// A reference to the element or place labelled `target` in another page,
-/// checked when the page is written: keno refuses it when the page or the
+/// checked when the page is written: encre refuses it when the page or the
 /// label does not exist.
 ///
 /// ```typ
@@ -124,15 +124,15 @@
     has-label(text, str(target)),
     message: "the page /" + path + " has no label <" + str(target) + ">",
   )
-  (keno-reference: version, page: path, label: str(target), name: element-name(text, str(target)))
+  (encre-reference: version, page: path, label: str(target), name: element-name(text, str(target)))
 }
 
 // A reference as metadata records it: a label of this page becomes a
 // reference with no page.
 #let reference(target, field) = {
   if type(target) == label {
-    (keno-reference: version, page: none, label: str(target), name: none)
-  } else if type(target) == dictionary and "keno-reference" in target {
+    (encre-reference: version, page: none, label: str(target), name: none)
+  } else if type(target) == dictionary and "encre-reference" in target {
     target
   } else {
     assert(false, message: field + " takes a label of this page, such as <invoice>, or at(\"/terms/invoice\", <invoice>) for another page")
@@ -144,7 +144,7 @@
 // it sits on; the key itself when it marks neither.
 #let local-name(key) = context {
   let element = query(metadata).find(found => (
-    type(found.value) == dictionary and "keno" in found.value and found.value.at("key", default: none) == key
+    type(found.value) == dictionary and "encre" in found.value and found.value.at("key", default: none) == key
   ))
   let marked = query(label(key))
   if element != none {
@@ -157,14 +157,14 @@
 }
 
 // A link to what `ref` names, showing `body`, or else the element's name or
-// the label. A link to another page names it by path, `keno:/terms/invoice`,
-// and keno points it at that page's address when it shows the page.
+// the label. A link to another page names it by path, `encre:/terms/invoice`,
+// and encre points it at that page's address when it shows the page.
 #let reference-link(ref, body: none) = {
   let shown = if body != none { body } else if ref.name != none { ref.name } else if ref.page == none { local-name(ref.label) } else { ref.label }
   if ref.page == none {
     link(label(ref.label), shown)
   } else {
-    link("keno:/" + ref.page + if ref.label == none { "" } else { "#" + ref.label }, shown)
+    link("encre:/" + ref.page + if ref.label == none { "" } else { "#" + ref.label }, shown)
   }
 }
 
@@ -184,11 +184,11 @@
   }
 }
 
-// An element: what it shows, then its metadata, which keno reads. `shown`
+// An element: what it shows, then its metadata, which encre reads. `shown`
 // carries the element's label, so that links and references land on it.
 #let element(kind, key, name, fields, shown) = {
   shown
-  metadata((keno: version, kind: kind, key: key, name: name, ..fields))
+  metadata((encre: version, kind: kind, key: key, name: name, ..fields))
 }
 
 // An element shown as a numbered figure of its own kind, titled with its
@@ -215,7 +215,7 @@
 // A list of `label: value` lines, for an element's attributes or fields.
 #let fields-list(pairs) = terms(..pairs.map(((name, value)) => terms.item(name, value)))
 
-// The sources of an element as keno records them: a citation of a work
+// The sources of an element as encre records them: a citation of a work
 // becomes the work's name, read from `/bibliography`, which is read only
 // when a source cites one.
 #let recorded-sources(sources) = {

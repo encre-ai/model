@@ -1,10 +1,10 @@
-// keno's model library: the elements of a domain model, and the links
-// between the pages of a knowledge base. keno serves it to every page:
+// encre's model library: the elements of a domain model, and the links
+// between the pages of a knowledge base. encre serves it to every page:
 //
-//   #import "@keno/model:0.1.0": *
+//   #import "@encre/model:0.1.0": *
 //
 // Each element shows through a Typst element, a definition list for terms
-// and a numbered figure for the others, and records what keno reads in a
+// and a numbered figure for the others, and records what encre reads in a
 // metadata element after it.
 
 #import "src/element.typ": at
