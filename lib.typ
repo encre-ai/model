@@ -17,3 +17,4 @@
 #import "src/formula.typ": formula
 #import "src/decision.typ": decision
 #import "src/question.typ": question
+#import "src/diagram.typ": diagram

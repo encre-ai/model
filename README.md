@@ -1,6 +1,6 @@
 # @encre/model
 
-The Typst library encre pages are written with. A page is one Typst file in a knowledge base. It holds the elements of a domain model: terms, entities, events, invariants, formulas, decisions and open questions, and the links between pages. encre serves this library to every page, compiles each page when it is written, and reads the elements out of it.
+The Typst library encre pages are written with. A page is one Typst file in a knowledge base. It holds the elements of a domain model: terms, entities, events, invariants, formulas, decisions, open questions and diagrams, and the links between pages. encre serves this library to every page, compiles each page when it is written, and reads the elements out of it.
 
 ```typ
 #import "@encre/model:0.1.0": *
@@ -41,9 +41,21 @@ Each function takes the element's name first. Every element also takes `aliases`
 
 #question("Credit notes", [Does a credit note reduce an invoice or replace it?],
   about: <invoice>)
+
+#diagram("Order lifecycle", [How an order moves from placed to delivered.],
+  about: <purchase-order-entity>,
+  ```mermaid
+  stateDiagram-v2
+    Placed --> Paid
+    Paid --> Delivered
+  ```)
 ```
 
 An entity is also a word of the language, so a page writes both. The `term` keeps the name's label, `<invoice>`, and the `entity` takes its own key, such as `"invoice-entity"`, because two elements of one page cannot share a label. A decision that replaces another names it in `supersedes`, and the old one's `status` becomes `"superseded"`.
+
+## Diagrams
+
+A diagram is a ```` ```mermaid ```` block, and encre draws it when it shows the page. Any Mermaid diagram type works: `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`, `classDiagram` and the others. Wrap it in `diagram` to make it an element, with a name, a description and the elements it shows in `about`, so search finds it. A bare ```` ```mermaid ```` block is drawn too, but search does not see it. A diagram illustrates: each rule it shows, such as a transition an order can make, is also an element of its own, such as an `event` or an `invariant`.
 
 ## Links between pages
 
