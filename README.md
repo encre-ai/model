@@ -57,6 +57,24 @@ An entity is also a word of the language, so a page writes both. The `term` keep
 
 A diagram is a ```` ```mermaid ```` block, and encre draws it when it shows the page. Any Mermaid diagram type works: `flowchart`, `sequenceDiagram`, `stateDiagram-v2`, `erDiagram`, `classDiagram` and the others. Wrap it in `diagram` to make it an element, with a name, a description and the elements it shows in `about`, so search finds it. A bare ```` ```mermaid ```` block is drawn too, but search does not see it. A diagram illustrates: each rule it shows, such as a transition an order can make, is also an element of its own, such as an `event` or an `invariant`.
 
+## Trying a formula
+
+A formula a reader can try with their own values takes `inputs` and `compute`. `inputs` names the symbols of `where` a reader enters, each with a default value or `none`, and `compute` is a function of them, taken in that order, that gives a number. encre shows a button on the formula that opens a form with a field per input, and shows the result as the reader types.
+
+```typ
+#formula("Days sales outstanding", $D = B / S times d$,
+  where: (
+    D: [how many days, on average, customers take to pay],
+    B: <outstanding-balance>,
+    S: [the gross amount invoiced over the period, in euros],
+    d: [the number of days in the period],
+  ),
+  inputs: (B: none, S: none, d: 90),
+  compute: (B, S, d) => B / S * d)
+```
+
+An input that is a list, such as the amounts of an account's invoices, takes an array as its default, `()` when empty, and arrives in `compute` as an array: `inputs: ("g_i": ()), compute: amounts => amounts.sum(default: 0)`. Numbers arrive as integers, or floats when they have a fraction. When every input has a default value, encre checks that `compute` gives a number for them when the page is written. Give a formula `compute` whenever its calculation can be run on numbers; leave it out when it cannot, such as a formula over a set no reader could type.
+
 ## Links between pages
 
 Pages live at paths such as `/billing/invoice`. An element of the same page is its label, `<invoice>`. An element of another page of the same knowledge base is `at("/billing/invoice", <invoice>)` inside a field such as `about` or `where`. In text, `see` links to a page or an element:
